@@ -40,11 +40,13 @@ output structure:
 ---------------------------------------------------------------
 '''
 #net output 7(grd_y)*10(grd_x)*5(confident,x,y,w,h)
-model = load_model(r'.\yolo.h5',custom_objects={'loss function': loss_func,'loss_func':loss_func})
+model = load_model(r'.\yolonew.h5',custom_objects={'loss function': loss_func,'loss_func':loss_func})
 
 capture = cv2.VideoCapture(0)
 
+i=0
 while 1:
+    i+=1
     ret, frame = capture.read()
     img=cv2.resize(frame, (320, 240),)
     #convert bgr->rgb
@@ -53,10 +55,10 @@ while 1:
     img = np.array([img])
     #get predict result
     pred = model.predict(img)[0]
-
+    face=[]
     for y in range(0,7):
             for x in range(0,10):
-                if(pred[y][x][0]>0.8):
+                if(pred[y][x][0]>0.9):
                     print(x,y,pred[y][x])
                     '''
                     (bx1,by1)-------------
@@ -69,12 +71,17 @@ while 1:
                     by1=int(pred[y][x][2]*240/7)
                     bx2=int(pred[y][x][3]*320)
                     by2=int(pred[y][x][4]*240)
+                    face=img[0][by1:by1+by2,bx1:bx1+bx2,:]
+                    
                     cv2.rectangle(img[0],(bx1,by1),(bx1+bx2,by1+by2),(255,0,0),2)
                     
     #convert rgb->bgr
     r,g,b = cv2.split(img[0])
     img = cv2.merge([b,g,r])
     img = np.array([img])
+    if(face!=[]):
+        face=img[0][by1:by1+by2,bx1:bx1+bx2,:]
+        cv2.imwrite('./face/'+str(i)+'.png',face)
     cv2.imshow('face',img[0])
     cv2.waitKey(1)
 capture.release()
