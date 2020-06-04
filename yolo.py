@@ -40,7 +40,7 @@ output structure:
 ---------------------------------------------------------------
 '''
 #net output 7(grd_y)*10(grd_x)*5(confident,x,y,w,h)
-model = load_model(r'.\yolonew.h5',custom_objects={'loss function': loss_func,'loss_func':loss_func})
+model = load_model(r'.\tiny4.h5',custom_objects={'loss function': loss_func,'loss_func':loss_func})
 
 capture = cv2.VideoCapture(0)
 
