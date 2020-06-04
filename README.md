@@ -14,7 +14,8 @@ How to use：
 
 #执行python(3)  yolo.py 开启人脸识别
 2、type python(3)  yolo.py and have fun
-
+#面部替换
+3、config cg_face.py and type python(3)  cg_face.py and have fun
 #tips
   1：If your GPU doesn't support CUDA , install tensorflow instead of tensorflow-gpu
   
